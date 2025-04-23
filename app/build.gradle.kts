@@ -2,16 +2,17 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+    alias(libs.plugins.kotlin.serialization)
     alias(libs.plugins.ksp)
     alias(libs.plugins.hilt)
 }
 
 android {
-    namespace = "id.ak.multimoduletemplate"
+    namespace = "id.ak.movieshighlight"
     compileSdk = 35
 
     defaultConfig {
-        applicationId = "id.ak.multimoduletemplate"
+        applicationId = "id.ak.movieshighlight"
         minSdk = 28
         targetSdk = 35
         versionCode = 1
@@ -51,8 +52,10 @@ dependencies {
 
     implementation(libs.androidx.multidex)
     implementation(libs.androidx.core.ktx)
+    implementation(libs.kotlinx.serialization)
     implementation(libs.androidx.lifecycle.runtime.ktx)
     implementation(libs.androidx.activity.compose)
+    implementation(libs.androidx.navigation)
     implementation(platform(libs.androidx.compose.bom))
     implementation(libs.androidx.ui)
     implementation(libs.androidx.ui.tooling.preview)

@@ -21,7 +21,7 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "Multi Module Template"
+rootProject.name = "Movies Highlight"
 include(":app")
 include(":data")
 include(":domain")

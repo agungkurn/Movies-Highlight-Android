@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Movies Highlight</string>
+
+    <string name="generic_error">An error occurred</string>
+    <string name="action_retry">Retry</string>
+</resources>

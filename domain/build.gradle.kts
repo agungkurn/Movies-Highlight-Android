@@ -2,4 +2,6 @@ plugins {
     alias(libs.plugins.domain)
 }
 
-dependencies {}
+dependencies {
+    implementation(libs.androidx.paging.common)
+}

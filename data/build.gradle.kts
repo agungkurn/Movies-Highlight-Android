@@ -16,5 +16,15 @@ fun getLocalProperty(propertyName: String): String? {
     return localProperties.getProperty(propertyName)
 }
 
+android {
+    defaultConfig {
+        buildConfigField("String", "API_KEY", getLocalProperty("api_key").orEmpty())
+        buildConfigField("String", "BASE_URL", getLocalProperty("base_url").orEmpty())
+        buildConfigField("String", "BASE_IMAGE_URL", getLocalProperty("base_image_url").orEmpty())
+        buildConfigField("String", "POSTER_SIZE", getLocalProperty("poster_size").orEmpty())
+    }
+}
+
 dependencies {
+    implementation(libs.androidx.paging.common)
 }
