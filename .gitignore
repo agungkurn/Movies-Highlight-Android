@@ -1,0 +1,90 @@
+# Built application files
+*.apk
+*.ap_
+
+# Gradle files
+.gradle/
+build/
+!gradle-wrapper.jar
+**/build/
+
+# Local configuration file (sdk path, etc)
+local.properties
+
+# Signing files
+*.jks
+*.keystore
+*.pem
+*.key
+
+# IntelliJ / Android Studio
+.idea/
+*.iml
+*.iws
+.idea/caches/
+.idea/libraries/
+.idea/modules.xml
+.idea/workspace.xml
+.idea/navEditor.xml
+.idea/assetWizardSettings.xml
+.idea/misc.xml
+.idea/gradle.xml
+
+# Kotlin/Java compile output
+out/
+bin/
+
+# Log files
+*.log
+
+# Generated files
+captures/
+output.json
+navigation.json
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Crashlytics / Firebase
+crashlytics-build.properties
+fabric.properties
+
+# Fastlane
+fastlane/report.xml
+fastlane/Preview.html
+fastlane/screenshots
+fastlane/test_output
+
+# Android local test and emulator stuff
+*.hprof
+*.hprof.old
+*.hprof.new
+*.stacktrace
+*.ec
+*.db
+*.db-journal
+*.db-journal.*
+*.db.*
+*.lock
+*.tmp
+*.dex
+
+# NDK
+obj/
+.externalNativeBuild/
+
+# Jetpack Compose compiler reports
+compose-compiler-report/
+compose-compiler-metrics/
+
+# Gitignore for multi-module
+
+# Ignore local run configurations
+.idea/runConfigurations/
+
+# Ignore IDE workspace-specific stuff
+.idea/tasks.xml
+
+# Ignore version catalogs in local test (if any)
+gradle/libs.versions.toml.backup
