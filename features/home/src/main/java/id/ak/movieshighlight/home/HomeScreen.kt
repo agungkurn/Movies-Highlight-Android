@@ -31,13 +31,17 @@ import kotlinx.coroutines.launch
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
-fun HomeScreen(modifier: Modifier = Modifier) {
+fun HomeScreen(
+    openMovieDetails: (Int) -> Unit,
+    openTvSerialDetails: (Int) -> Unit,
+    modifier: Modifier = Modifier
+) {
     val viewModel = hiltViewModel<HomeViewModel>()
     val movies = viewModel.movies.collectAsLazyPagingItems()
     val tvSeries = viewModel.tvSeries.collectAsLazyPagingItems()
 
     val topAppBarScrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
-    val coroutineScope= rememberCoroutineScope()
+    val coroutineScope = rememberCoroutineScope()
 
     val tabs = stringArrayResource(R.array.home_tabs)
     val pagerState = rememberPagerState { tabs.size }
@@ -83,7 +87,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                         MovieList(
                             modifier = Modifier.fillMaxWidth(),
                             movies = movies,
-                            openDetails = {}
+                            openDetails = openMovieDetails
                         )
                     }
 
@@ -91,7 +95,7 @@ fun HomeScreen(modifier: Modifier = Modifier) {
                         TvSeriesList(
                             modifier = Modifier.fillMaxWidth(),
                             tvSeries = tvSeries,
-                            openDetails = {}
+                            openDetails = openTvSerialDetails
                         )
                     }
                 }

@@ -1,7 +1,9 @@
 package id.ak.movieshighlight.data.model
 
-import kotlinx.serialization.Serializable
+import id.ak.convention.data.BuildConfig
+import id.ak.movieshighlight.domain.entity.TvSerial
 import kotlinx.serialization.SerialName
+import kotlinx.serialization.Serializable
 
 @Serializable
 data class TvDetailsResponse(
@@ -50,9 +52,6 @@ data class TvDetailsResponse(
     @SerialName("languages")
     val languages: List<String>? = null,
 
-    @SerialName("created_by")
-    val createdBy: List<CreatorModel>? = null,
-
     @SerialName("last_episode_to_air")
     val lastEpisodeToAir: EpisodeModel? = null,
 
@@ -100,4 +99,33 @@ data class TvDetailsResponse(
 
     @SerialName("status")
     val status: String? = null
-)
+) {
+    fun toDomain() = TvSerial(
+        id = id ?: 0,
+        title = name ?: originalName.orEmpty(),
+        originalLanguage = originalLanguage.orEmpty(),
+        genres = genres?.mapNotNull { it.name }.orEmpty(),
+        productionCountries = productionCountries?.mapNotNull { it.name }.orEmpty(),
+        overview = overview.orEmpty(),
+        posterUrl = posterPath?.let {
+            BuildConfig.BASE_IMAGE_URL + BuildConfig.POSTER_SIZE + it
+        }.orEmpty(),
+        originCountry = originCountry.orEmpty(),
+        productionCompanies = productionCompanies?.mapNotNull { it.name }.orEmpty(),
+        voteAverage = voteAverage ?: .0,
+        voteCount = voteCount ?: 0,
+        tagline = tagline.takeIf { !it.isNullOrBlank() },
+        adult = adult == true,
+        homepage = homepage.orEmpty(),
+        status = status.orEmpty(),
+        numberOfEpisodes = numberOfEpisodes ?: 0,
+        numberOfSeasons = numberOfSeasons ?: 0,
+        networks = networks?.mapNotNull { it.name }.orEmpty(),
+        seasons = seasons?.map { it.toDomain() }.orEmpty(),
+        firstAirDate = firstAirDate.orEmpty(),
+        lastEpisodeToAir = lastEpisodeToAir?.toDomain(),
+        episodeRunTime = episodeRunTime.orEmpty(),
+        nextEpisodeToAir = nextEpisodeToAir,
+        inProduction = inProduction == true
+    )
+}

@@ -1,5 +1,6 @@
 package id.ak.movieshighlight
 
+import android.Manifest
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -15,9 +16,11 @@ import androidx.core.content.ContextCompat
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
+import androidx.navigation.toRoute
 import dagger.hilt.android.AndroidEntryPoint
+import id.ak.movieshighlight.details.DetailsScreen
 import id.ak.movieshighlight.home.HomeScreen
-import id.ak.movieshighlight.ui.theme.MultiModuleTemplateTheme
+import id.ak.movieshighlight.ui.theme.MoviesHighlightTheme
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -25,14 +28,32 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            MultiModuleTemplateTheme {
+            MoviesHighlightTheme {
                 val navController = rememberNavController()
 
                 RequestNotificationPermission()
 
                 NavHost(navController, MainRoute.Home) {
                     composable<MainRoute.Home> {
-                        HomeScreen()
+                        HomeScreen(
+                            openMovieDetails = {
+                                navController.navigate(MainRoute.Details(movieId = it))
+                            },
+                            openTvSerialDetails = {
+                                navController.navigate(MainRoute.Details(tvSerialId = it))
+                            }
+                        )
+                    }
+                    composable<MainRoute.Details> {
+                        MoviesHighlightTheme(darkTheme = true) {
+                            val details = it.toRoute<MainRoute.Details>()
+
+                            DetailsScreen(
+                                movieId = details.movieId,
+                                tvSerialId = details.tvSerialId,
+                                onNavigateUp = { navController.popBackStack() }
+                            )
+                        }
                     }
                 }
             }
@@ -51,10 +72,10 @@ class MainActivity : ComponentActivity() {
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
                 if (ContextCompat.checkSelfPermission(
                         context,
-                        android.Manifest.permission.POST_NOTIFICATIONS
+                        Manifest.permission.POST_NOTIFICATIONS
                     ) != PackageManager.PERMISSION_GRANTED
                 ) {
-                    permissionLauncher.launch(android.Manifest.permission.POST_NOTIFICATIONS)
+                    permissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
                 }
             }
         }

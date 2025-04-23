@@ -9,7 +9,7 @@ import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
-import id.ak.movieshighlight.domain.entity.Movie
+import id.ak.movieshighlight.domain.entity.MovieListItem
 import id.ak.movieshighlight.home.composable.FilmItem
 import id.ak.movieshighlight.ui.composable.CustomLazyVerticalGrid
 import id.ak.movieshighlight.ui.ext.isLoading
@@ -17,7 +17,7 @@ import id.ak.movieshighlight.ui.ext.isLoading
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun MovieList(
-    movies: LazyPagingItems<Movie>,
+    movies: LazyPagingItems<MovieListItem>,
     openDetails: (Int) -> Unit,
     modifier: Modifier = Modifier
 ) {

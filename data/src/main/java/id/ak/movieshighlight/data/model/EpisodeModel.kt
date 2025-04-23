@@ -1,5 +1,6 @@
 package id.ak.movieshighlight.data.model
 
+import id.ak.movieshighlight.domain.entity.TvSerialLastEpisode
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -33,7 +34,7 @@ data class EpisodeModel(
     val episodeNumber: Int? = null,
 
     @SerialName("vote_average")
-    val voteAverage: Int? = null,
+    val voteAverage: Double? = null,
 
     @SerialName("name")
     val name: String? = null,
@@ -43,4 +44,18 @@ data class EpisodeModel(
 
     @SerialName("vote_count")
     val voteCount: Int? = null
-)
+) {
+    fun toDomain() = TvSerialLastEpisode(
+        id = id ?: 0,
+        name = name.orEmpty(),
+        overview = overview.orEmpty(),
+        showId = showId ?: 0,
+        seasonNumber = seasonNumber ?: 0,
+        runtime = runtime ?: 0,
+        stillUrl = stillPath,
+        airDate = airDate.orEmpty(),
+        episodeNumber = episodeNumber ?: 0,
+        voteAverage = voteAverage ?: .0,
+        voteCount = voteCount ?: 0
+    )
+}

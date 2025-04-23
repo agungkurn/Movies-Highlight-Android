@@ -1,7 +1,7 @@
 package id.ak.movieshighlight.data.model
 
 import id.ak.convention.data.BuildConfig
-import id.ak.movieshighlight.domain.entity.TvSerial
+import id.ak.movieshighlight.domain.entity.TvSerialListItem
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -49,7 +49,7 @@ data class DiscoverTvModel(
     @SerialName("vote_count")
     val voteCount: Int? = null
 ) {
-    fun toDomain() = TvSerial(
+    fun toDomain() = TvSerialListItem(
         id = id ?: 0,
         overview = overview.orEmpty(),
         originalLanguage = originalLanguage.orEmpty(),

@@ -21,8 +21,12 @@ import javax.inject.Singleton
 @InstallIn(SingletonComponent::class)
 class RemoteModule {
     @Provides
-    fun provideConverterFactory(): Converter.Factory =
-        Json.asConverterFactory("application/json; charset=UTF8".toMediaType())
+    fun provideConverterFactory(): Converter.Factory {
+        val json = Json {
+            ignoreUnknownKeys = true
+        }
+        return json.asConverterFactory("application/json; charset=UTF8".toMediaType())
+    }
 
     @Provides
     @Singleton

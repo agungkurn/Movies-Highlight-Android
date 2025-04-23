@@ -1,5 +1,7 @@
 package id.ak.movieshighlight.data.model
 
+import id.ak.convention.data.BuildConfig
+import id.ak.movieshighlight.domain.entity.TvSerialSeason
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -16,7 +18,7 @@ data class TvSeasonModel(
     val episodeCount: Int? = null,
 
     @SerialName("vote_average")
-    val voteAverage: Int? = null,
+    val voteAverage: Double? = null,
 
     @SerialName("name")
     val name: String? = null,
@@ -29,4 +31,15 @@ data class TvSeasonModel(
 
     @SerialName("poster_path")
     val posterPath: String? = null
-)
+) {
+    fun toDomain() = TvSerialSeason(
+        id = id ?: 0,
+        seasonNumber = seasonNumber ?: 0,
+        name = name.orEmpty(),
+        overview = overview.orEmpty(),
+        airDate = airDate.orEmpty(),
+        episodeCount = episodeCount ?: 0,
+        voteAverage = voteAverage ?: .0,
+        posterUrl = posterPath?.let { BuildConfig.BASE_IMAGE_URL + BuildConfig.POSTER_SIZE + it }
+    )
+}

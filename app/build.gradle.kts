@@ -49,6 +49,7 @@ dependencies {
     implementation(project(":data"))
     implementation(project(":domain"))
     implementation(project(":features:home"))
+    implementation(project(":features:details"))
 
     implementation(libs.androidx.multidex)
     implementation(libs.androidx.core.ktx)

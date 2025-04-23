@@ -6,4 +6,7 @@ import kotlinx.serialization.Serializable
 sealed class MainRoute {
     @Serializable
     data object Home : MainRoute()
+
+    @Serializable
+    data class Details(val movieId: Int? = null, val tvSerialId: Int? = null) : MainRoute()
 }

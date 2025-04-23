@@ -1,7 +1,7 @@
 package id.ak.movieshighlight.data.model
 
 import id.ak.convention.data.BuildConfig
-import id.ak.movieshighlight.domain.entity.Movie
+import id.ak.movieshighlight.domain.entity.MovieListItem
 import kotlinx.serialization.SerialName
 import kotlinx.serialization.Serializable
 
@@ -49,7 +49,7 @@ data class DiscoverMovieModel(
     @SerialName("vote_count")
     val voteCount: Int? = null
 ) {
-    fun toDomain() = Movie(
+    fun toDomain() = MovieListItem(
         id = id ?: 0,
         overview = overview.orEmpty(),
         originalLanguage = originalLanguage.orEmpty(),

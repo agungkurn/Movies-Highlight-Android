@@ -3,15 +3,14 @@ package id.ak.movieshighlight.data.pagingsource
 import androidx.paging.PagingSource
 import androidx.paging.PagingState
 import id.ak.movieshighlight.data.remote.FilmApi
-import id.ak.movieshighlight.domain.entity.Movie
-import id.ak.movieshighlight.domain.entity.TvSerial
+import id.ak.movieshighlight.domain.entity.TvSerialListItem
 
-class TvPagingSource(private val api: FilmApi) : PagingSource<Int, TvSerial>() {
-    override fun getRefreshKey(state: PagingState<Int, TvSerial>): Int? {
+class TvPagingSource(private val api: FilmApi) : PagingSource<Int, TvSerialListItem>() {
+    override fun getRefreshKey(state: PagingState<Int, TvSerialListItem>): Int? {
         return null
     }
 
-    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, TvSerial> {
+    override suspend fun load(params: LoadParams<Int>): LoadResult<Int, TvSerialListItem> {
         val page = params.key ?: 1
 
         return try {

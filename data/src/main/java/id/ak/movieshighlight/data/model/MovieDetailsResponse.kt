@@ -1,5 +1,7 @@
 package id.ak.movieshighlight.data.model
 
+import id.ak.convention.data.BuildConfig
+import id.ak.movieshighlight.domain.entity.Movie
 import kotlinx.serialization.Serializable
 import kotlinx.serialization.SerialName
 
@@ -24,7 +26,7 @@ data class MovieDetailsResponse(
     val revenue: Int? = null,
 
     @SerialName("genres")
-    val genres: List<GenreModel?>? = null,
+    val genres: List<GenreModel>? = null,
 
     @SerialName("popularity")
     val popularity: Double? = null,
@@ -69,7 +71,7 @@ data class MovieDetailsResponse(
     val voteAverage: Double? = null,
 
     @SerialName("belongs_to_collection")
-    val belongsToCollection: String? = null,
+    val belongsToCollection: BelongsToCollectionModel? = null,
 
     @SerialName("tagline")
     val tagline: String? = null,
@@ -82,4 +84,29 @@ data class MovieDetailsResponse(
 
     @SerialName("status")
     val status: String? = null
-)
+) {
+    fun toDomain() = Movie(
+        id = id ?: 0,
+        title = title ?: originalTitle.orEmpty(),
+        originalLanguage = originalLanguage.orEmpty(),
+        revenue = revenue ?: 0,
+        genres = genres?.mapNotNull { it.name }.orEmpty(),
+        productionCountries = productionCountries?.mapNotNull { it.name }.orEmpty(),
+        budget = budget ?: 0,
+        overview = overview.orEmpty(),
+        runtime = runtime ?: 0,
+        posterUrl = posterPath?.let {
+            BuildConfig.BASE_IMAGE_URL + BuildConfig.POSTER_SIZE + it
+        }.orEmpty(),
+        originCountry = originCountry.orEmpty(),
+        productionCompanies = productionCompanies?.mapNotNull { it.name }.orEmpty(),
+        releaseDate = releaseDate.orEmpty(),
+        voteAverage = voteAverage ?: .0,
+        voteCount = voteCount ?: 0,
+        belongsToCollection = belongsToCollection?.name,
+        tagline = tagline.orEmpty(),
+        adult = adult == true,
+        homepage = homepage.orEmpty(),
+        status = status.orEmpty()
+    )
+}
