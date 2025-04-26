@@ -4,6 +4,7 @@ internal object ConventionConstants {
     val commonCoreModule = ":common:core"
     val commonUiModule = ":common:ui"
     val domainModule = ":domain"
+    val appModule = ":app"
     val resourceExcludes = listOf(
         "/META-INF/{AL2.0,LGPL2.1}",
         "/META-INF/gradle/incremental.annotation.processors"

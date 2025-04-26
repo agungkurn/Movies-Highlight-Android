@@ -40,6 +40,10 @@ gradlePlugin {
             id = "base.feature"
             implementationClass = "id.ak.convention.FeatureLayerPlugin"
         }
+        register("dynamicFeature") {
+            id = "base.feature.dynamic"
+            implementationClass = "id.ak.convention.DynamicFeaturePlugin"
+        }
         register("common") {
             id = "base.common.core"
             implementationClass = "id.ak.convention.CommonPlugin"

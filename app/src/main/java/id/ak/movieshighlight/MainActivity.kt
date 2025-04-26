@@ -1,6 +1,7 @@
 package id.ak.movieshighlight
 
 import android.Manifest
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
@@ -13,6 +14,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.ui.platform.LocalContext
 import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -41,6 +43,14 @@ class MainActivity : ComponentActivity() {
                             },
                             openTvSerialDetails = {
                                 navController.navigate(MainRoute.Details(tvSerialId = it))
+                            },
+                            openWatchlist = {
+                                Intent(
+                                    Intent.ACTION_VIEW,
+                                    "movies://watchlist".toUri()
+                                ).also { intent ->
+                                    startActivity(intent)
+                                }
                             }
                         )
                     }
@@ -51,7 +61,7 @@ class MainActivity : ComponentActivity() {
                             DetailsScreen(
                                 movieId = details.movieId,
                                 tvSerialId = details.tvSerialId,
-                                onNavigateUp = { navController.popBackStack() }
+                                onNavigateUp = navController::popBackStack
                             )
                         }
                     }

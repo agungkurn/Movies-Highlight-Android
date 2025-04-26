@@ -1,5 +1,6 @@
 package id.ak.movieshighlight.details
 
+import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,6 +13,7 @@ import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material3.BottomSheetScaffold
 import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
 import androidx.compose.material3.SnackbarHostState
@@ -48,6 +50,8 @@ fun DetailsScreen(
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
     val movieDetails by viewModel.movieDetails.collectAsStateWithLifecycle()
     val tvSerialDetails by viewModel.tvSerialDetails.collectAsStateWithLifecycle()
+    val isInWatchlist by viewModel.isInWatchlist.collectAsStateWithLifecycle(null)
+    val loadingWatchlist by viewModel.loadingWatchlist.collectAsStateWithLifecycle()
 
     val actionRetry = stringResource(id.ak.convention.common.ui.R.string.action_retry)
 
@@ -92,11 +96,30 @@ fun DetailsScreen(
                     }
                 },
                 actions = {
-                    IconButton(onClick = {}) {
-                        Icon(
-                            painterResource(R.drawable.baseline_playlist_add_24),
-                            contentDescription = "add to watchlist"
-                        )
+                    AnimatedContent(isInWatchlist) { added ->
+                        when (added) {
+                            false -> IconButton(
+                                onClick = viewModel::addToWatchlist,
+                                enabled = !loadingWatchlist
+                            ) {
+                                Icon(
+                                    painterResource(R.drawable.baseline_playlist_add_24),
+                                    contentDescription = "add to watchlist"
+                                )
+                            }
+
+                            true -> FilledTonalButton(
+                                onClick = viewModel::removeFromWatchlist,
+                                enabled = !loadingWatchlist
+                            ) {
+                                Icon(
+                                    painterResource(R.drawable.baseline_playlist_add_check_24),
+                                    contentDescription = "remove from watchlist"
+                                )
+                            }
+
+                            else -> {}
+                        }
                     }
                 }
             )

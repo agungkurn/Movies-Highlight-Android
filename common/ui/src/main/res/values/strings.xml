@@ -4,4 +4,9 @@
 
     <string name="generic_error">An error occurred</string>
     <string name="action_retry">Retry</string>
+
+    <string-array name="list_tabs">
+        <item>Movies</item>
+        <item>TV Series</item>
+    </string-array>
 </resources>

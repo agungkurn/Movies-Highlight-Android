@@ -34,6 +34,7 @@ import kotlinx.coroutines.launch
 fun HomeScreen(
     openMovieDetails: (Int) -> Unit,
     openTvSerialDetails: (Int) -> Unit,
+    openWatchlist: () -> Unit,
     modifier: Modifier = Modifier
 ) {
     val viewModel = hiltViewModel<HomeViewModel>()
@@ -43,7 +44,7 @@ fun HomeScreen(
     val topAppBarScrollBehavior = TopAppBarDefaults.exitUntilCollapsedScrollBehavior()
     val coroutineScope = rememberCoroutineScope()
 
-    val tabs = stringArrayResource(R.array.home_tabs)
+    val tabs = stringArrayResource(id.ak.convention.common.ui.R.array.list_tabs)
     val pagerState = rememberPagerState { tabs.size }
 
     Scaffold(
@@ -53,7 +54,7 @@ fun HomeScreen(
                 scrollBehavior = topAppBarScrollBehavior,
                 title = { Text(stringResource(id.ak.convention.common.ui.R.string.app_name)) },
                 actions = {
-                    IconButton(onClick = {}) {
+                    IconButton(onClick = openWatchlist) {
                         Icon(
                             painterResource(R.drawable.baseline_playlist_play_24),
                             contentDescription = "Watchlist"

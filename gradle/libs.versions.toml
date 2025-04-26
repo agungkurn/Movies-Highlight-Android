@@ -8,19 +8,20 @@ junitVersion = "1.2.1"
 espressoCore = "3.6.1"
 lifecycleRuntimeKtx = "2.8.7"
 activityCompose = "1.10.1"
-composeBom = "2025.04.00"
+composeBom = "2025.04.01"
 jetbrainsKotlinJvm = "2.1.20"
 ksp = "2.1.20-2.0.0"
 coil = "3.1.0"
 navigation = "2.8.9"
 chucker = "4.1.0"
-datastore = "1.1.4"
+datastore = "1.1.5"
 serialization = "1.8.1"
 retrofit = "2.11.0"
 hilt = "2.56.2"
 hiltNavigation = "1.2.0"
 multidex = "2.0.1"
 paging = "3.3.6"
+room = "2.7.1"
 
 [libraries]
 kotlin-gradlePlugin = { group = "org.jetbrains.kotlin", name = "kotlin-gradle-plugin", version.ref = "kotlin" }
@@ -50,6 +51,11 @@ kotlinx-serialization = { group = "org.jetbrains.kotlinx", name = "kotlinx-seria
 retrofit = { group = "com.squareup.retrofit2", name = "retrofit", version.ref = "retrofit" }
 retrofit-converter = { group = "com.squareup.retrofit2", name = "converter-kotlinx-serialization", version.ref = "retrofit" }
 
+androidx-room-runtime = { group = "androidx.room", name = "room-runtime", version.ref = "room" }
+androidx-room-compiler = { group = "androidx.room", name = "room-compiler", version.ref = "room" }
+androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "room" }
+androidx-room-paging = { group = "androidx.room", name = "room-paging", version.ref = "room" }
+
 hilt-android = { group = "com.google.dagger", name = "hilt-android", version.ref = "hilt" }
 hilt-compiler = { group = "com.google.dagger", name = "hilt-android-compiler", version.ref = "hilt" }
 hilt-navigation = { group = "androidx.hilt", name = "hilt-navigation-compose", version.ref = "hiltNavigation" }
@@ -75,11 +81,14 @@ kotlin-serialization = { id = "org.jetbrains.kotlin.plugin.serialization", versi
 kotlin-parcelize = { id = "org.jetbrains.kotlin.plugin.parcelize", version.ref = "kotlin" }
 jetbrains-kotlin-jvm = { id = "org.jetbrains.kotlin.jvm", version.ref = "jetbrainsKotlinJvm" }
 ksp = { id = "com.google.devtools.ksp", version.ref = "ksp" }
+kapt = { id = "org.jetbrains.kotlin.kapt", version.ref = "kotlin" }
 hilt = { id = "com.google.dagger.hilt.android", version.ref = "hilt" }
+android-dynamic-feature = { id = "com.android.dynamic-feature", version.ref = "agp" }
 
 # convention
 data = { id = "base.data", version = "unspecified" }
 domain = { id = "base.domain", version = "unspecified" }
 feature = { id = "base.feature", version = "unspecified" }
+feature-dynamic = { id = "base.feature.dynamic", version = "unspecified" }
 common-core = { id = "base.common.core", version = "unspecified" }
 common-ui = { id = "base.common.ui", version = "unspecified" }

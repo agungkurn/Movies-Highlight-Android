@@ -1,9 +1,9 @@
 package id.ak.movieshighlight.data.remote
 
-import id.ak.movieshighlight.data.model.DiscoverMovieResponse
-import id.ak.movieshighlight.data.model.DiscoverTvResponse
-import id.ak.movieshighlight.data.model.MovieDetailsResponse
-import id.ak.movieshighlight.data.model.TvDetailsResponse
+import id.ak.movieshighlight.data.model.response.DiscoverMovieResponse
+import id.ak.movieshighlight.data.model.response.DiscoverTvResponse
+import id.ak.movieshighlight.data.model.response.MovieDetailsResponse
+import id.ak.movieshighlight.data.model.response.TvDetailsResponse
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query

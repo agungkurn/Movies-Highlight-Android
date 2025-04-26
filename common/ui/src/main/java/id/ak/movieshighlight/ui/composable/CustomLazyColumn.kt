@@ -25,6 +25,7 @@ import androidx.compose.ui.unit.dp
 import androidx.paging.LoadState
 import androidx.paging.compose.LazyPagingItems
 import id.ak.convention.common.ui.R
+import id.ak.movieshighlight.ui.ext.isEmpty
 
 @Composable
 fun CustomLazyColumn(
@@ -41,7 +42,7 @@ fun CustomLazyColumn(
     emptyState: @Composable () -> Unit = {},
     content: LazyListScope.() -> Unit
 ) {
-    if (lazyPagingItems.loadState.refresh is LoadState.NotLoading && lazyPagingItems.itemCount == 0) {
+    if (lazyPagingItems.isEmpty()) {
         emptyState()
     } else {
         LazyColumn(

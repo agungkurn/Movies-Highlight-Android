@@ -10,8 +10,8 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.paging.compose.LazyPagingItems
 import id.ak.movieshighlight.domain.entity.MovieListItem
-import id.ak.movieshighlight.home.composable.FilmItem
 import id.ak.movieshighlight.ui.composable.CustomLazyVerticalGrid
+import id.ak.movieshighlight.ui.composable.FilmItem
 import id.ak.movieshighlight.ui.ext.isLoading
 
 @OptIn(ExperimentalMaterial3Api::class)
