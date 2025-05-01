@@ -1,0 +1,26 @@
+version: '2.1'
+orbs:
+  android: circleci/android@3.0.0
+jobs:
+  build-and-test:
+    executor:
+      name: android/android_machine
+      resource_class: large
+      tag: default
+    steps:
+      - checkout
+      - run:
+          name: Set Gradlew Permissions
+          command: chmod +x ./gradlew
+      - run:
+          name: Build Project
+          command: ./gradlew build
+      - run:
+          name: Run Unit Tests
+          command: ./gradlew test
+      - android/save_gradle_cache:
+          cache_prefix: v1a
+workflows:
+  test:
+    jobs:
+      - build-and-test
