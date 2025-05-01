@@ -2,13 +2,19 @@ version: '2.1'
 orbs:
   android: circleci/android@3.0.0
 jobs:
-  test:
+  build-and-test:
     executor:
       name: android/android_machine
       resource_class: large
       tag: default
     steps:
       - checkout
+      - run:
+          name: Set Gradlew Permissions
+          command: chmod +x ./gradlew
+      - run:
+          name: Build Project
+          command: ./gradlew build
       - run:
           name: Run Unit Tests
           command: ./gradlew test
@@ -17,4 +23,4 @@ jobs:
 workflows:
   test:
     jobs:
-      - test
+      - build-and-test
