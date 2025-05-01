@@ -11,6 +11,7 @@ class GetTvSerialDetails @Inject constructor(private val filmRepository: FilmRep
             val result = filmRepository.getTvSerialDetails(id)
             UseCaseResult.Success(result)
         } catch (e: Exception) {
+            e.printStackTrace()
             UseCaseResult.Failed(e.message)
         }
     }

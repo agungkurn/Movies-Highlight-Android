@@ -127,6 +127,12 @@ class WatchlistViewModel(
         }
     }
 
+    // need to call this due to use cases are singleton
+    fun resetDetails() {
+        _movieDetails.value = null
+        _tvSerialDetails.value = null
+    }
+
     class Factory @Inject constructor(
         private val getWatchlistPagingDataUseCase: GetWatchlistPagingData,
         private val getMovieDetailsUseCase: GetMovieDetails,

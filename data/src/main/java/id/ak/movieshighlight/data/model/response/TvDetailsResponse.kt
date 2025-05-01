@@ -86,7 +86,7 @@ data class TvDetailsResponse(
     val adult: Boolean? = null,
 
     @SerialName("next_episode_to_air")
-    val nextEpisodeToAir: String? = null,
+    val nextEpisodeToAir: EpisodeModel? = null,
 
     @SerialName("in_production")
     val inProduction: Boolean? = null,
@@ -125,7 +125,7 @@ data class TvDetailsResponse(
         firstAirDate = firstAirDate.orEmpty(),
         lastEpisodeToAir = lastEpisodeToAir?.toDomain(),
         episodeRunTime = episodeRunTime.orEmpty(),
-        nextEpisodeToAir = nextEpisodeToAir,
+        nextEpisodeToAir = nextEpisodeToAir?.toDomain(),
         inProduction = inProduction == true
     )
 }

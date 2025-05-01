@@ -53,7 +53,9 @@ class WatchlistActivity : ComponentActivity() {
                                     Watchlist.Type.Movie -> WatchlistRoute.Details(movieId = it.id)
                                     Watchlist.Type.TvSerial -> WatchlistRoute.Details(tvSerialId = it.id)
                                 }
-                                navController.navigate(route)
+                                navController.navigate(route) {
+                                    restoreState = false
+                                }
                             }
                         )
                     }

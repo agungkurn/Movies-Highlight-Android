@@ -106,10 +106,10 @@ class FilmRepositoryImpl @Inject constructor(
     }
 
     override fun isMovieInWatchlist(id: Int): Flow<Boolean> {
-        return watchlistDao.getMovieById(id).map { it != null }
+        return watchlistDao.isMovieExists(id)
     }
 
     override fun isTvInWatchlist(id: Int): Flow<Boolean> {
-        return watchlistDao.geTvSeriesById(id).map { it != null }
+        return watchlistDao.isTvSeriesExists(id)
     }
 }

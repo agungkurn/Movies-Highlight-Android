@@ -17,11 +17,11 @@ interface WatchlistDao {
     @Query("SELECT * FROM TvSerialEntity")
     fun getTvSeries(): PagingSource<Int, TvSerialEntity>
 
-    @Query("SELECT * FROM MovieEntity WHERE id = :id")
-    fun getMovieById(id: Int): Flow<MovieEntity?>
+    @Query("SELECT EXISTS(SELECT 1 FROM MovieEntity WHERE id = :id)")
+    fun isMovieExists(id: Int): Flow<Boolean>
 
-    @Query("SELECT * FROM TvSerialEntity WHERE id = :id")
-    fun geTvSeriesById(id: Int): Flow<TvSerialEntity?>
+    @Query("SELECT EXISTS(SELECT 1 FROM TvSerialEntity WHERE id = :id)")
+    fun isTvSeriesExists(id: Int): Flow<Boolean>
 
     @Query("DELETE FROM MovieEntity WHERE id = :id")
     suspend fun deleteMovie(id: Int)

@@ -23,6 +23,6 @@ data class TvSerial(
     val seasons: List<TvSerialSeason>,
     val lastEpisodeToAir: TvSerialLastEpisode?,
     val episodeRunTime: List<Int>,
-    val nextEpisodeToAir: String?,
+    val nextEpisodeToAir: TvSerialLastEpisode?,
     val inProduction: Boolean
 )

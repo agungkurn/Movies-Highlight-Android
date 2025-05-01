@@ -21,6 +21,7 @@ import androidx.compose.material3.SnackbarResult
 import androidx.compose.material3.TopAppBar
 import androidx.compose.material3.rememberBottomSheetScaffoldState
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.DisposableEffect
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.remember
@@ -57,8 +58,6 @@ fun DetailsScreen(
     val bottomSheetScaffoldState = rememberBottomSheetScaffoldState()
     val snackbarHostState = remember { SnackbarHostState() }
 
-
-
     LaunchedEffect(uiState) {
         if (uiState is UiState.Error) {
             snackbarHostState.currentSnackbarData?.dismiss()
@@ -69,6 +68,12 @@ fun DetailsScreen(
                     else -> {}
                 }
             }
+        }
+    }
+
+    DisposableEffect(Unit) {
+        onDispose {
+            viewModel.resetDetails()
         }
     }
 
@@ -86,7 +91,7 @@ fun DetailsScreen(
                 actions = {
                     AnimatedContent(isInWatchlist) { added ->
                         when (added) {
-                            null -> CircularProgressIndicator()
+                            null -> {}
                             false -> IconButton(
                                 onClick = viewModel::addToWatchlist,
                                 enabled = !loadingWatchlist
