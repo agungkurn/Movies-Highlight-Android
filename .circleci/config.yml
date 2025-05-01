@@ -9,6 +9,10 @@ jobs:
       tag: default
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - gradle-cache-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+            - gradle-cache-
       - run:
           name: Set Gradlew Permissions
           command: chmod +x ./gradlew
@@ -18,6 +22,11 @@ jobs:
       - run:
           name: Build Project
           command: ./gradlew build
+      - save_cache:
+          paths:
+            - ~/.gradle/caches
+            - ~/.gradle/wrapper
+          key: gradle-cache-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
 workflows:
   test:
     jobs:
