@@ -9,17 +9,24 @@ jobs:
       tag: default
     steps:
       - checkout
+      - restore_cache:
+          keys:
+            - gradle-cache-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
+            - gradle-cache-
       - run:
           name: Set Gradlew Permissions
           command: chmod +x ./gradlew
       - run:
-          name: Build Project
-          command: ./gradlew build
-      - run:
           name: Run Unit Tests
-          command: ./gradlew test
-      - android/save_gradle_cache:
-          cache_prefix: v1a
+          command: ./gradlew testDebugUnitTest
+      - run:
+          name: Build Project
+          command: ./gradlew assembleDebug
+      - save_cache:
+          paths:
+            - ~/.gradle/caches
+            - ~/.gradle/wrapper
+          key: gradle-cache-{{ checksum "gradle/wrapper/gradle-wrapper.properties" }}
 workflows:
   test:
     jobs:
