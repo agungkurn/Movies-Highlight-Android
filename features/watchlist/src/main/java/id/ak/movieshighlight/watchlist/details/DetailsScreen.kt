@@ -2,9 +2,13 @@ package id.ak.movieshighlight.watchlist.details
 
 import androidx.compose.animation.AnimatedContent
 import androidx.compose.foundation.layout.Box
+import androidx.compose.foundation.layout.WindowInsets
+import androidx.compose.foundation.layout.asPaddingValues
 import androidx.compose.foundation.layout.consumeWindowInsets
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.navigationBars
+import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
@@ -117,26 +121,28 @@ fun DetailsScreen(
             )
         },
         sheetContent = {
-            movieDetails?.let {
-                MovieSheet(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                        .verticalScroll(rememberScrollState()),
-                    movie = it
-                )
-            }
-            tvSerialDetails?.let {
-                TvSerialSheet(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(16.dp)
-                        .verticalScroll(rememberScrollState()),
-                    tvSerial = it
-                )
+            Box(
+                modifier = Modifier
+                    .verticalScroll(rememberScrollState())
+                    .padding(start = 16.dp, end = 16.dp, bottom = 16.dp)
+                    .navigationBarsPadding()
+            ) {
+                movieDetails?.let {
+                    MovieSheet(
+                        modifier = Modifier.fillMaxWidth(),
+                        movie = it
+                    )
+                }
+                tvSerialDetails?.let {
+                    TvSerialSheet(
+                        modifier = Modifier.fillMaxWidth(),
+                        tvSerial = it
+                    )
+                }
             }
         },
-        sheetPeekHeight = 100.dp
+        sheetPeekHeight = 100.dp + WindowInsets.navigationBars.asPaddingValues()
+            .calculateBottomPadding()
     ) {
         Box(
             modifier = Modifier
