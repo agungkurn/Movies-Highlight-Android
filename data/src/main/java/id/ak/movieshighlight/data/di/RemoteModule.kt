@@ -33,10 +33,9 @@ class RemoteModule {
     @Provides
     @Singleton
     fun provideInterceptor(@ApplicationContext context: Context): OkHttpClient {
-        val hostname = BuildConfig.BASE_URL.apply {
-            drop("https://".length)
-            split("/").first()
-        }
+        val hostname = BuildConfig.BASE_URL.drop("https://".length)
+            .split("/")
+            .first()
         val certificatePinner = CertificatePinner.Builder()
             .add(hostname, "sha256/k1Hdw5sdSn5kh/gemLVSQD/P4i4IBQEY1tW4WNxh9XM=")
             .build()
