@@ -10,11 +10,13 @@ import dagger.hilt.components.SingletonComponent
 import id.ak.convention.data.BuildConfig
 import id.ak.movieshighlight.data.remote.FilmApi
 import kotlinx.serialization.json.Json
+import okhttp3.CertificatePinner
 import okhttp3.MediaType.Companion.toMediaType
 import okhttp3.OkHttpClient
 import retrofit2.Converter
 import retrofit2.Retrofit
 import retrofit2.converter.kotlinx.serialization.asConverterFactory
+import java.time.Duration
 import javax.inject.Singleton
 
 @Module
@@ -30,8 +32,15 @@ class RemoteModule {
 
     @Provides
     @Singleton
-    fun provideInterceptor(@ApplicationContext context: Context): OkHttpClient =
-        OkHttpClient.Builder()
+    fun provideInterceptor(@ApplicationContext context: Context): OkHttpClient {
+        val hostname = BuildConfig.BASE_URL.apply {
+            drop("https://".length)
+            split("/").first()
+        }
+        val certificatePinner = CertificatePinner.Builder()
+            .add(hostname, "sha256/k1Hdw5sdSn5kh/gemLVSQD/P4i4IBQEY1tW4WNxh9XM=")
+            .build()
+        return OkHttpClient.Builder()
             .addInterceptor(ChuckerInterceptor(context))
             .addInterceptor { chain ->
                 val token = BuildConfig.API_KEY
@@ -43,7 +52,11 @@ class RemoteModule {
 
                 chain.proceed(request)
             }
+            .connectTimeout(Duration.ofMinutes(2))
+            .readTimeout(Duration.ofMinutes(2))
+            .certificatePinner(certificatePinner)
             .build()
+    }
 
     @Provides
     @Singleton
