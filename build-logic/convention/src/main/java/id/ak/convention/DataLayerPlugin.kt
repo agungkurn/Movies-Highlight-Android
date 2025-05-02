@@ -13,8 +13,6 @@ import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.kotlin.dsl.configure
 import org.gradle.kotlin.dsl.dependencies
-import kotlin.jvm.kotlin
-import kotlin.text.get
 
 class DataLayerPlugin : Plugin<Project> {
     override fun apply(target: Project) {
@@ -43,6 +41,10 @@ class DataLayerPlugin : Plugin<Project> {
                 debugImplementation(libs.chucker.debug.get())
                 releaseImplementation(libs.chucker.release.get())
                 testImplementation(libs.junit.get())
+                testImplementation(libs.kotlinx.coroutines.test.get())
+                testImplementation(libs.androidx.paging.testing.get())
+                testImplementation(libs.mockk.android.get())
+                testImplementation(libs.mockk.agent.get())
             }
         }
     }
