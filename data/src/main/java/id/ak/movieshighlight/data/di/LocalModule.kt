@@ -8,6 +8,8 @@ import dagger.hilt.InstallIn
 import dagger.hilt.android.qualifiers.ApplicationContext
 import dagger.hilt.components.SingletonComponent
 import id.ak.movieshighlight.data.local.WatchlistDatabase
+import net.sqlcipher.database.SQLiteDatabase
+import net.sqlcipher.database.SupportFactory
 import javax.inject.Singleton
 
 @Module
@@ -15,10 +17,16 @@ import javax.inject.Singleton
 class LocalModule {
     @Provides
     @Singleton
-    fun provideWatchlistDatabase(@ApplicationContext context: Context) =
-        Room.databaseBuilder(
+    fun provideWatchlistDatabase(@ApplicationContext context: Context): WatchlistDatabase {
+        val passphrase = SQLiteDatabase.getBytes("watchlist".toCharArray())
+        val factory = SupportFactory(passphrase)
+
+        return Room.databaseBuilder(
             context = context,
             klass = WatchlistDatabase::class.java,
             name = WatchlistDatabase.DATABASE_NAME
-        ).build()
+        ).fallbackToDestructiveMigration(true)
+            .openHelperFactory(factory)
+            .build()
+    }
 }
