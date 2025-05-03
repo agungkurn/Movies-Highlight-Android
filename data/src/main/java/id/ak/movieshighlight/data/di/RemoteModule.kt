@@ -37,7 +37,7 @@ class RemoteModule {
             .split("/")
             .first()
         val certificatePinner = CertificatePinner.Builder()
-            .add(hostname, "sha256/k1Hdw5sdSn5kh/gemLVSQD/P4i4IBQEY1tW4WNxh9XM=")
+            .add(hostname, BuildConfig.CERTIFICATE_HASH)
             .build()
         return OkHttpClient.Builder()
             .addInterceptor(ChuckerInterceptor(context))

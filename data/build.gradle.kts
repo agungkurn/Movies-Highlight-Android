@@ -34,6 +34,11 @@ android {
                 getCiEnvironment("base_image_url").orEmpty()
             )
             buildConfigField("String", "POSTER_SIZE", getCiEnvironment("poster_size").orEmpty())
+            buildConfigField(
+                "String",
+                "CERTIFICATE_HASH",
+                getCiEnvironment("certificate_hash").orEmpty()
+            )
         } else {
             buildConfigField("String", "API_KEY", getLocalProperty("api_key").orEmpty())
             buildConfigField("String", "BASE_URL", getLocalProperty("base_url").orEmpty())
@@ -43,6 +48,11 @@ android {
                 getLocalProperty("base_image_url").orEmpty()
             )
             buildConfigField("String", "POSTER_SIZE", getLocalProperty("poster_size").orEmpty())
+            buildConfigField(
+                "String",
+                "CERTIFICATE_HASH",
+                getLocalProperty("certificate_hash").orEmpty()
+            )
         }
     }
 }
