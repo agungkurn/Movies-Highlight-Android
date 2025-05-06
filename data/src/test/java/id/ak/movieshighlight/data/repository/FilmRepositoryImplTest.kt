@@ -62,7 +62,7 @@ class FilmRepositoryImplTest {
         }
         coEvery { filmApi.getDiscoverMovie(any()) } returns mockResponse
 
-        val actual = repository.moviePagingData().asSnapshot()
+        val actual = repository.moviePagingData.asSnapshot()
 
         assert(actual.isNotEmpty())
         assertEquals(mockResponse.results?.size, actual.size)
@@ -77,7 +77,7 @@ class FilmRepositoryImplTest {
         }
         coEvery { filmApi.getDiscoverMovie(any()) } returns mockResponse
 
-        val actual = repository.moviePagingData().asSnapshot()
+        val actual = repository.moviePagingData.asSnapshot()
 
         assert(actual.isEmpty())
     }
@@ -90,7 +90,7 @@ class FilmRepositoryImplTest {
         }
         coEvery { filmApi.getDiscoverTv(any()) } returns mockResponse
 
-        val actual = repository.getTvPagingData().asSnapshot()
+        val actual = repository.tvPagingData.asSnapshot()
 
         assert(actual.isNotEmpty())
         assertEquals(mockResponse.results?.size, actual.size)
@@ -105,7 +105,7 @@ class FilmRepositoryImplTest {
         }
         coEvery { filmApi.getDiscoverTv(any()) } returns mockResponse
 
-        val actual = repository.getTvPagingData().asSnapshot()
+        val actual = repository.tvPagingData.asSnapshot()
 
         assert(actual.isEmpty())
     }
