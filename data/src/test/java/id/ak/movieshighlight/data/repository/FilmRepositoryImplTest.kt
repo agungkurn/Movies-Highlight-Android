@@ -119,7 +119,7 @@ class FilmRepositoryImplTest {
         coEvery { filmApi.getMovieDetails(any()) } returns response
         every { response.toDomain() } returns expectedDomain
 
-        val result = repository.getMovieDetails(movieId)
+        val result = repository.getMovieDetails(movieId).first()
 
         assertEquals(expectedDomain, result)
         coVerify { filmApi.getMovieDetails(movieId) }
@@ -131,7 +131,7 @@ class FilmRepositoryImplTest {
 
         coEvery { filmApi.getMovieDetails(any()) } throws Exception()
 
-        repository.getMovieDetails(movieId)
+        repository.getMovieDetails(movieId).first()
     }
 
     @Test
@@ -143,7 +143,7 @@ class FilmRepositoryImplTest {
         coEvery { filmApi.getTvDetails(tvId) } returns response
         every { response.toDomain() } returns expectedDomain
 
-        val result = repository.getTvSerialDetails(tvId)
+        val result = repository.getTvSerialDetails(tvId).first()
 
         assertEquals(expectedDomain, result)
         coVerify { filmApi.getTvDetails(tvId) }
@@ -155,7 +155,7 @@ class FilmRepositoryImplTest {
 
         coEvery { filmApi.getTvDetails(tvId) } throws Exception()
 
-        repository.getTvSerialDetails(tvId)
+        repository.getTvSerialDetails(tvId).first()
     }
 
     @Test
