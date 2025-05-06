@@ -62,7 +62,7 @@ class FilmRepositoryImplTest {
         }
         coEvery { filmApi.getDiscoverMovie(any()) } returns mockResponse
 
-        val actual = repository.getMoviePagingData().asSnapshot()
+        val actual = repository.moviePagingData().asSnapshot()
 
         assert(actual.isNotEmpty())
         assertEquals(mockResponse.results?.size, actual.size)
@@ -77,7 +77,7 @@ class FilmRepositoryImplTest {
         }
         coEvery { filmApi.getDiscoverMovie(any()) } returns mockResponse
 
-        val actual = repository.getMoviePagingData().asSnapshot()
+        val actual = repository.moviePagingData().asSnapshot()
 
         assert(actual.isEmpty())
     }

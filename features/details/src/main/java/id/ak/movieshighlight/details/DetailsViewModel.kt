@@ -6,7 +6,7 @@ import dagger.hilt.android.lifecycle.HiltViewModel
 import id.ak.movieshighlight.domain.entity.Movie
 import id.ak.movieshighlight.domain.entity.TvSerial
 import id.ak.movieshighlight.domain.entity.Watchlist
-import id.ak.movieshighlight.domain.result.UseCaseResult
+import id.ak.movieshighlight.domain.result.getData
 import id.ak.movieshighlight.domain.usecase.details.GetMovieDetails
 import id.ak.movieshighlight.domain.usecase.details.GetTvSerialDetails
 import id.ak.movieshighlight.domain.usecase.details.IsInWatchlist
@@ -15,10 +15,16 @@ import id.ak.movieshighlight.domain.usecase.watchlist.RemoveFromWatchlist
 import id.ak.movieshighlight.ui.state.UiState
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.SharingStarted
+import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.flow.filterNotNull
+import kotlinx.coroutines.flow.flatMapLatest
 import kotlinx.coroutines.flow.flattenConcat
 import kotlinx.coroutines.flow.flowOf
+import kotlinx.coroutines.flow.onStart
+import kotlinx.coroutines.flow.stateIn
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -33,49 +39,46 @@ class DetailsViewModel @Inject constructor(
     private val _uiState = MutableStateFlow<UiState>(UiState.NotLoading)
     val uiState get() = _uiState.asStateFlow()
 
-    private val _movieDetails = MutableStateFlow<Movie?>(null)
-    val movieDetails get() = _movieDetails.asStateFlow()
+    private val movieId = MutableStateFlow<Int?>(null)
+    private val tvSeriesId = MutableStateFlow<Int?>(null)
 
-    private val _tvSerialDetails = MutableStateFlow<TvSerial?>(null)
-    val tvSerialDetails get() = _tvSerialDetails.asStateFlow()
+    val movieDetails: StateFlow<Movie?> = movieId.filterNotNull()
+        .onStart { _uiState.value = UiState.Loading }
+        .flatMapLatest { getMovieDetailsUseCase(it) }
+        .getData(
+            onSuccess = { _uiState.value = UiState.NotLoading },
+            onError = { _uiState.value = UiState.Error(it) }
+        )
+        .stateIn(viewModelScope, started = SharingStarted.WhileSubscribed(), initialValue = null)
+
+    val tvSerialDetails: StateFlow<TvSerial?> = tvSeriesId.filterNotNull()
+        .onStart { _uiState.value = UiState.Loading }
+        .flatMapLatest { getTvSerialDetailsUseCase(it) }
+        .getData(
+            onSuccess = { _uiState.value = UiState.NotLoading },
+            onError = { _uiState.value = UiState.Error(it) }
+        )
+        .stateIn(viewModelScope, started = SharingStarted.WhileSubscribed(), initialValue = null)
 
     private val _loadingWatchlist = MutableStateFlow(false)
     val loadingWatchlist get() = _loadingWatchlist.asStateFlow()
 
-    val isInWatchlist = combine(movieDetails, tvSerialDetails) { movie, tvSerial ->
-        movie?.id?.let {
+    val isInWatchlist = combine(movieId, tvSeriesId) { movieId, tvSeriesId ->
+        movieId?.let {
             isInWatchlistUseCase.movie(it)
-        } ?: tvSerial?.id?.let {
+        } ?: tvSeriesId?.let {
             isInWatchlistUseCase.tvSerial(it)
         } ?: flowOf(null)
     }.flattenConcat()
 
-    fun fetchMovieDetails(id: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
-            _uiState.value = UiState.Loading
-
-            when (val result = getMovieDetailsUseCase(id)) {
-                is UseCaseResult.Failed -> _uiState.value = UiState.Error(result.message)
-                is UseCaseResult.Success<Movie> -> {
-                    _uiState.value = UiState.NotLoading
-                    _movieDetails.value = result.data
-                }
-            }
-        }
+    fun setMovieId(id: Int) {
+        movieId.value = null        // triggers refresh
+        movieId.value = id
     }
 
-    fun fetchTvSerialDetails(id: Int) {
-        viewModelScope.launch(Dispatchers.IO) {
-            _uiState.value = UiState.Loading
-
-            when (val result = getTvSerialDetailsUseCase(id)) {
-                is UseCaseResult.Failed -> _uiState.value = UiState.Error(result.message)
-                is UseCaseResult.Success<TvSerial> -> {
-                    _uiState.value = UiState.NotLoading
-                    _tvSerialDetails.value = result.data
-                }
-            }
-        }
+    fun setTvSerialId(id: Int) {
+        tvSeriesId.value = null     // triggers refresh
+        tvSeriesId.value = id
     }
 
     fun addToWatchlist() {

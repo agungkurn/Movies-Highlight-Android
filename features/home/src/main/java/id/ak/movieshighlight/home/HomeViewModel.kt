@@ -13,7 +13,6 @@ class HomeViewModel @Inject constructor(
     getMoviePagingData: GetMoviePagingData,
     getTvPagingData: GetTvPagingData
 ) : ViewModel() {
-    val movies = getMoviePagingData().cachedIn(viewModelScope)
-
-    val tvSeries = getTvPagingData().cachedIn(viewModelScope)
+    val movies = getMoviePagingData.data.cachedIn(viewModelScope)
+    val tvSeries = getTvPagingData.data.cachedIn(viewModelScope)
 }

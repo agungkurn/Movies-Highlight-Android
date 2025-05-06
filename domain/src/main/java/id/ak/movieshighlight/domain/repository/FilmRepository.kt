@@ -9,12 +9,12 @@ import id.ak.movieshighlight.domain.entity.Watchlist
 import kotlinx.coroutines.flow.Flow
 
 interface FilmRepository {
-    fun getMoviePagingData(): Flow<PagingData<MovieListItem>>
-    fun getTvPagingData(): Flow<PagingData<TvSerialListItem>>
-    suspend fun getMovieDetails(id: Int): Movie
-    suspend fun getTvSerialDetails(id: Int): TvSerial
-    fun getMovieWatchlistPagingData(): Flow<PagingData<Watchlist>>
-    fun getTvWatchlistPagingData(): Flow<PagingData<Watchlist>>
+    val moviePagingData: Flow<PagingData<MovieListItem>>
+    val tvPagingData: Flow<PagingData<TvSerialListItem>>
+    val movieWatchlistPagingData: Flow<PagingData<Watchlist>>
+    val tvWatchlistPagingData: Flow<PagingData<Watchlist>>
+    fun getMovieDetails(id: Int): Flow<Movie>
+    fun getTvSerialDetails(id: Int): Flow<TvSerial>
     suspend fun addToWatchlist(watchlist: Watchlist)
     suspend fun removeFromWatchlist(id: Int, type: Watchlist.Type)
     fun isMovieInWatchlist(id: Int): Flow<Boolean>

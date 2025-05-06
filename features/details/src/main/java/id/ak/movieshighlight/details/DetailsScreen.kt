@@ -64,8 +64,8 @@ fun DetailsScreen(
 
     LaunchedEffect(Unit) {
         when {
-            movieId != null -> viewModel.fetchMovieDetails(movieId)
-            tvSerialId != null -> viewModel.fetchTvSerialDetails(tvSerialId)
+            movieId != null -> viewModel.setMovieId(movieId)
+            tvSerialId != null -> viewModel.setTvSerialId(tvSerialId)
         }
     }
 
@@ -77,8 +77,8 @@ fun DetailsScreen(
                 when (snackbarResult) {
                     SnackbarResult.ActionPerformed -> {
                         when {
-                            movieId != null -> viewModel.fetchMovieDetails(movieId)
-                            tvSerialId != null -> viewModel.fetchTvSerialDetails(tvSerialId)
+                            movieId != null -> viewModel.setMovieId(movieId)
+                            tvSerialId != null -> viewModel.setTvSerialId(tvSerialId)
                         }
                     }
 
